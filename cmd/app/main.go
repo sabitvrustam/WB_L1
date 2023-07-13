@@ -5,5 +5,11 @@ import (
 )
 
 func main() {
-	units.SquaresValue
+	//units.SquaresValue()
+	//units.SquaresValueSum()
+	//units.WorkerPul()
+	//units.WriteCh()
+	//units.CloseGoroutine()
+	//units.WrieDataMap()
+	units.ChangeBit()
 }

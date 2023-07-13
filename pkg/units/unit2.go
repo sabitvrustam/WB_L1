@@ -7,11 +7,12 @@ import (
 )
 
 func SquaresValue() {
-	channel := make(chan int)
+	channel := make(chan float64)
 	wg := sync.WaitGroup{}
 	nums := [...]int{2, 4, 6, 8, 10}
 	wg.Add(len(nums))
 	for _, num := range nums {
+		num := num
 		go func() {
 			square(num, channel)
 			wg.Done()
@@ -32,7 +33,7 @@ func SquaresValue() {
 	close <- struct{}{}
 }
 
-func square(num int, channel chan int) {
-	result := math.Pow(2, float64(num))
-	channel <- int(result)
+func square(num int, channel chan float64) {
+	result := math.Pow(float64(num), 2.0)
+	channel <- result
 }

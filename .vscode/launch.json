@@ -8,6 +8,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/app",
             "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
                    }
     ]
 }
