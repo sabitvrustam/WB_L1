@@ -18,21 +18,20 @@ func SquaresValueSum() {
 			wg.Done()
 		}()
 	}
-	close := make(chan interface{})
+	shutdown := make(chan interface{})
 	var result float64
 	go func() {
 		for {
 			select {
 			case res := <-channel:
 				result += res
-			case <-close:
-
+			case <-shutdown:
 				return
 			}
 		}
 	}()
 	wg.Wait()
-	close <- struct{}{}
+	close(shutdown)
 	fmt.Println(result)
 }
 

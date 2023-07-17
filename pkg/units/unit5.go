@@ -9,15 +9,12 @@ import (
 
 func WriteCh() {
 	var workTime int
-	fmt.Print("Введите врямя работы приложения в секундах: ")
+	fmt.Print("Введите время работы приложения в секундах: ")
 	fmt.Fscan(os.Stdin, &workTime)
 	to := time.After(time.Duration(workTime) * time.Second)
 	channel := make(chan int64)
-	go func() {
-		for {
-			readCh(channel)
-		}
-	}()
+	go readCh(channel)
+
 	for {
 		select {
 		case <-to:

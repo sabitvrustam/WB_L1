@@ -25,8 +25,8 @@ func CloseGoroutine() {
 		fmt.Println("не выбран не один из вариантов")
 		return
 	}
-
 }
+
 func metodCannal() {
 	fmt.Println("metod channal")
 	var workTime int
@@ -34,16 +34,13 @@ func metodCannal() {
 	fmt.Fscan(os.Stdin, &workTime)
 	to := time.After(time.Duration(workTime) * time.Second)
 	channel := make(chan int64)
-	go func() {
-		for {
-			readCh(channel)
-		}
-	}()
+	go readCh(channel)
+
 	for {
 		select {
 		case <-to:
 			log.Println("CANCEL")
-			return
+			break
 		default:
 			channel <- time.Now().UnixMicro()
 			time.Sleep(1 * time.Second)
@@ -56,18 +53,18 @@ func metodContext() {
 	channel := make(chan int64)
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT)
 
-	go func() {
-		for id := 0; id <= 5; id++ {
-			go worker(id, channel, ctx, nil)
-		}
-	}()
+	for id := 0; id <= 5; id++ {
+		go func(id int) {
+			worker(id, channel, ctx)
+		}(id)
+	}
 
 	for {
 		select {
 		case <-ctx.Done():
 			cancel()
 			log.Println("CANCEL")
-			return
+			break
 		default:
 			channel <- time.Now().UnixMicro()
 			time.Sleep(time.Second)

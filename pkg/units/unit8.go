@@ -42,6 +42,7 @@ func changeOneBit(num, position, newBit int) int64 {
 	fmt.Printf("Стало \t %s(%v)\n", string(bits), newVal)
 	return newVal
 }
+
 func ChangeBit() {
 	log.Println(changeOneBit(256, 0, 0))
 }

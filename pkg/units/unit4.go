@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 	"time"
 )
@@ -20,7 +19,9 @@ func WorkerPul() {
 
 	go func() {
 		for id := 0; id <= namberWorker; id++ {
-			go worker(id, channel, ctx, nil)
+			go func(id int) {
+				worker(id, channel, ctx)
+			}(id)
 		}
 	}()
 
@@ -35,10 +36,9 @@ func WorkerPul() {
 			time.Sleep(500 * time.Millisecond)
 		}
 	}
-
 }
 
-func worker(id int, channel chan int64, ctx context.Context, wg *sync.WaitGroup) {
+func worker(id int, channel chan int64, ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
@@ -53,5 +53,4 @@ func worker(id int, channel chan int64, ctx context.Context, wg *sync.WaitGroup)
 			fmt.Println("worker", id, "Данные", data)
 		}
 	}
-
 }
