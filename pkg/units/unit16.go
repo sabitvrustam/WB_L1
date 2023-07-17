@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-// взято с просторов интернета https://blog.boot.dev/golang/quick-sort-golang/
 func Sort() {
 	s := []int{4, 2, 3, 1, 5, 10}
 	fmt.Println(quickSortStart(s))
